@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+//display the table to show the status of the game
 void table(char board[]) {
     int i;
     printf("+-----+\n");
@@ -14,6 +15,7 @@ void table(char board[]) {
     }
 }
 
+//Switches the turn over to next player or computer
 void switch_turn(char *turn){
     if (*turn == 'X') 
         *turn = 'O';
@@ -21,6 +23,7 @@ void switch_turn(char *turn){
         *turn = 'X';
 }
 
+//What choice the players will make, depending on what version they choose (PlayervsPlayer or PlayervsComputer)
 void playerChoice(char board[], char *turn, int *game) {
     int choice;
     int upper = 9;
@@ -30,19 +33,25 @@ void playerChoice(char board[], char *turn, int *game) {
         scanf("%d", &choice);
     }
     if(*turn == 'O'){
+        //Player chose Simulation vs Player2, second player can add in their inputs 1-9.
         if(*game == 1){
         printf("\nPlayer2: make your move: (Choose a number 1-9 for the board #.)");
         scanf("%d", &choice);
         }
+        //Player chose Simulation vs Computer, use random inputs for computer input 1-9.
         if(*game == 2){
             printf("\nComputer: make your move:\n");
             choice = (rand() % (upper - lower + 1)) + lower;
         }
     }
+    //if board has an empty spot then player choice is allowed.
     if(board[choice - 1] == '-')
         board[choice - 1] = *turn;
 }
 
+//to check if player won, check horizontal win: (0-2) (3-5) (6-9)
+//vertical win: (0 3 6) (1 4 7) (2 5 8)
+//diagonal win: (0 4 8) (2 4 6)
 bool resultCheck(char board[]) {
     bool win = false;
     //Row check
@@ -83,6 +92,7 @@ bool resultCheck(char board[]) {
     return win;
 }
 
+//check if the game is a draw. (No more moves to be made.)
 bool drawCheck(int turns) {
     if (turns < 9) {
         return false;
