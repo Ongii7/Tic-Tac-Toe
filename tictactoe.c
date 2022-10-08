@@ -1,74 +1,43 @@
 //Tic Tac Toe game between 2 players or player vs computer
 
 #include <stdio.h>
-
-void table(char board[]) {
-    int i;
-    for (i = 0; i < 9; i++){
-        printf("|%c", board[i]);
-        if (((i + 1) % 3) == 0) {
-            printf("|\n");
-        }
-    }
-}
-
-void switch_turn(char *turn){
-    if (*turn == 'X') 
-    {
-        *turn = 'O';
-    }
-    else {
-        *turn = 'X';
-    }
-}
+#include "tictactoe.h"
 //to check if player won, check horizontal win: (0-2) (3-5) (6-9)
 //vertical win: (0 3 6) (1 4 7) (2 5 8)
 //diagonal win: (0 4 8) (2 4 6)
-int main() {
 
+int main() {
     char turn = 'X';
-    int choice = 0;
-    int winner = 0;
+    int game = 0;
+    int turns = 0;
+    int playerCounter = 1;
     char board[] = { '-', '-', '-', '-', '-', '-', '-', '-', '-' };
-    
-    table(board);
-    /**
-    //prompt user for game they wish to play
     printf("\n===========================");
     printf("\nWELCOME TO TIC TAC TOE!");
     printf("\n1 --- person vs. person");
     printf("\n2 --- person vs. computer");
     printf("\nEnter your choice (1 or 2):");
-    choice = getint();
-    printf("\nYou have entered choice ");
-    putint(choice);
-    printf("\nThe current status is:");
-    printf("\n+-----------+");
-    printf("\n|" + row1[0] + "|" + row1[1] + "|" + row1[2] + "|");
-    printf("\n+-----------+");
-    printf("\n|" + row2[0] + "|" + row2[1] + "|" + row2[2] + "|");
-    printf("\n+-----------+");
-    printf("\n|" + row3[0] + "|" + row3[1] + "|" + row3[2] + "|");
-    printf("\n+-----------+");
-    while(winner == 0) {
-        printf("Player1: make your move (enter which row then column)");
-        //get two values
-        int rowChoice = getInt();
-        int colChoice = getInt();
-        //if player input valid:
-        printf("\nGood!");
-        printf("\nThe current status is:");
-        printf("\n+-----------+");
-        printf("\n|" + row1[0] + "|" + row1[1] + "|" + row1[2] + "|");
-        printf("\n+-----------+");
-        printf("\n|" + row2[0] + "|" + row2[1] + "|" + row2[2] + "|");
-        printf("\n+-----------+");
-        printf("\n|" + row3[0] + "|" + row3[1] + "|" + row3[2] + "|");
-        printf("\n+-----------+");
-
+    scanf("%d", &game);
+    printf("\nYou have entered choice %d", game);
+    printf("\nThe current status is:\n");
+    while (resultCheck(board) == 0) {
+        table(board);
+        playerChoice(board, &turn, &game);
+        turns++;
+        playerCounter++;
+        if (resultCheck(board)) {
+            table(board);
+            if(playerCounter % 2 == 0)
+                printf("Awesome! Player1 Wins!\n");
+            if(playerCounter % 2 == 1)
+                printf("Awesome! Player2 Wins!\n");
+        }
+        if (drawCheck(turns)) {
+            printf("Tie.\n");
+        }
+        switch_turn(&turn);
     }
-
-    
+    /**
     //read information from console
 
     //begin the game and prompt the user to provide their input
