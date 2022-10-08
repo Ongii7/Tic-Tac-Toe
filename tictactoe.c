@@ -11,8 +11,22 @@ void table(char board[]) {
         }
     }
 }
+
+void switch_turn(char *turn){
+    if (*turn == 'X') 
+    {
+        *turn = 'O';
+    }
+    else {
+        *turn = 'X';
+    }
+}
+//to check if player won, check horizontal win: (0-2) (3-5) (6-9)
+//vertical win: (0 3 6) (1 4 7) (2 5 8)
+//diagonal win: (0 4 8) (2 4 6)
 int main() {
 
+    char turn = 'X';
     int choice = 0;
     int winner = 0;
     char board[] = { '-', '-', '-', '-', '-', '-', '-', '-', '-' };
