@@ -4,6 +4,8 @@
 #include "tictactoe.h"
 
 int main() {
+    char playAgain = 'n';
+    do {
     char turn = 'X';
     int game = 0;
     int turns = 0;
@@ -38,5 +40,7 @@ int main() {
         }
         switch_turn(&turn);
     }
-    return 0;
+    printf("Would you like to play again? (y/n): \n");
+    playAgain = getchar();
+    } while (playAgain == 'y' || playAgain == 'Y');
 }
